@@ -1,0 +1,5 @@
+version: 2.1
+
+description: |
+  Orb for publishing npm package.
+  source code: https://github.com/uraway/npm-publisher

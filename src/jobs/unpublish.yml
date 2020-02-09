@@ -1,0 +1,19 @@
+description: |
+  Unpublish npm package
+executor: node
+parameters:
+  publish-token-variable:
+    default: NPM_TOKEN
+    description: |
+      Name of environment variable containing your NPM_TOKEN.
+    type: env_var_name
+  package-path:
+    default: "."
+    description: |
+      Root directory of your package
+    type: string
+steps:
+  - checkout
+  - unpublish:
+      publish-token-variable: << parameters.publish-token-variable >>
+      package-path: << parameters.package-path >>

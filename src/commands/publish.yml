@@ -1,0 +1,33 @@
+description: |
+  Publish package to npm registry.
+parameters:
+  publish-token-variable:
+    default: NPM_TOKEN
+    description: |
+      Name of environment variable containing your NPM_TOKEN.
+    type: env_var_name
+  package-path:
+    default: "."
+    description: |
+      Root directory of your extension
+    type: string
+  pre-publish-steps:
+    default: []
+    description: |
+      Steps which are executed before publication of your package.
+    type: steps
+  post-publish-steps:
+    default: []
+    description: |
+      Steps which are executed after publication of your package.
+    type: steps
+steps:
+  - steps: << parameters.pre-publish-steps >>
+  - authenticate-with-registry:
+      publish-token-variable: << parameters.publish-token-variable >>
+  - run:
+      name: Publish your package
+      working_directory: << parameters.package-path >>
+      command: |
+        npm publish
+  - steps: << parameters.post-publish-steps >>

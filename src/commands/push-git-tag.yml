@@ -1,0 +1,20 @@
+description: |
+  Push git tag to your repository
+parameters:
+  package-path:
+    default: "."
+    description: |
+      Root directory of your extension
+    type: string
+steps:
+  - extract-package-name:
+      package-path: << parameters.package-path >>
+  - run:
+      name: Push git tag
+      working_directory: << parameters.package-path >>
+      command: |
+        TAG=$(cat package.json | jq -r '.version')
+        git tag -a "v$TAG" \
+          -m "View package:" \
+          -m "https://www.npmjs.com/package/$PACKAGE_NAME"
+        git push origin "v$TAG"

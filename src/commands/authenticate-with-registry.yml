@@ -1,0 +1,12 @@
+description: |
+  Publish package to npm registry.
+parameters:
+  publish-token-variable:
+    default: NPM_TOKEN
+    description: |
+      Name of environment variable containing your NPM_TOKEN.
+    type: env_var_name
+steps:
+  - run:
+      name: Authenticate with registry
+      command: echo "//registry.npmjs.org/:_authToken=$<< parameters.publish-token-variable >>" > .npmrc
