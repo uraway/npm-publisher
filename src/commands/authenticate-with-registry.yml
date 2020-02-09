@@ -9,4 +9,4 @@ parameters:
 steps:
   - run:
       name: Authenticate with registry
-      command: echo "//registry.npmjs.org/:_authToken=$<< parameters.publish-token-variable >>" > .npmrc
+      command: echo "//registry.npmjs.org/:_authToken=$<< parameters.publish-token-variable >>" > ~/.npmrc
