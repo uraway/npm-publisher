@@ -24,9 +24,9 @@ jobs:
           working_directory: npm-publisher-orb-integration-test
           command: |
             git checkout master
-            npm version minor
+            npm version patch
             git add .
-            git commit -m "increment minor version"
+            git commit -m "increment patch version [ci skip]"
             git push
 
 version: 2.1
