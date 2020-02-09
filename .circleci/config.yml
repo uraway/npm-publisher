@@ -40,7 +40,7 @@ workflows:
           bot-user: uraway
           fail-if-semver-not-indicated: true
           publish-version-tag: true
-          ssh-fingerprints: <フィンガープリント>
+          ssh-fingerprints: 6e:e6:2d:e8:e2:cc:4b:ee:1f:15:02:f7:dc:0c:2f:08
           filters:
             branches:
               only: master

@@ -1,5 +1,5 @@
 description: |
-  Publish VS Code Extension
+  Publish npm package
 executor: node
 parameters:
   publish-token-variable:
@@ -22,29 +22,23 @@ parameters:
     description: |
       Root directory of your package.
     type: string
-  prefer-yarn:
-    default: false
-    description: |
-      Use yarn instead of npm to install node_modules.
-    type: boolean
-  pre-install-steps:
+  pre-publish-steps:
     default: []
     description: |
-      Steps which are executed before installation of node_modules. Use restore_cache here.
+      Steps which are executed before publication of your package.
     type: steps
-  post-install-steps:
+  post-publish-steps:
     default: []
     description: |
-      Steps which are executed after installation of node_modules. Use save_cache here.
+      Steps which are executed after publication of your package.
     type: steps
 steps:
   - checkout
   - publish:
       publish-token-variable: << parameters.publish-token-variable >>
       package-path: << parameters.package-path >>
-      prefer-yarn: << parameters.prefer-yarn >>
-      pre-install-steps: << parameters.pre-install-steps >>
-      post-install-steps: << parameters.post-install-steps >>
+      pre-publish-steps: << parameters.pre-publish-steps >>
+      post-publish-steps: << parameters.post-publish-steps >>
   - when:
       condition: << parameters.push-git-tag >>
       steps:
