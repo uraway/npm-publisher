@@ -27,7 +27,7 @@ jobs:
             npm version patch
             git add .
             git commit -m "increment patch version [ci skip]"
-            git push
+            git push -f
 
 version: 2.1
 workflows:
