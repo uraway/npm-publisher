@@ -9,11 +9,34 @@ parameters:
   run-integration-tests:
     default: false
     type: boolean
+
+jobs:
+  increment-version:
+    executor: npm-publisher/node
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 6e:e6:2d:e8:e2:cc:4b:ee:1f:15:02:f7:dc:0c:2f:08
+      - npm-publisher/git-configure
+      - run:
+          name: increment version & push commit
+          working_directory: npm-publisher-orb-integration-test
+          command: |
+            git checkout master
+            npm version minor
+            git add .
+            git commit -m "increment minor version"
+            git push
+
 version: 2.1
 workflows:
   integration-tests_prod-release:
     jobs:
+      - increment-version
       - npm-publisher/publish-from-package-version:
+          requires:
+            - increment-version
           name: publish-npm-package
           publish-token-variable: NPM_TOKEN
           push-git-tag: false
