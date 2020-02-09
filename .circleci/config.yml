@@ -18,13 +18,15 @@ workflows:
           publish-token-variable: NPM_TOKEN
           push-git-tag: false
           package-path: npm-publisher-orb-integration-test
-          pre-install-steps:
+          pre-publish-steps:
             - restore_cache:
                 keys:
                   - v1-node-cache-{{ .Branch }}-{{ checksum "npm-publisher-orb-integration-test/package-lock.json" }}
                   - v1-node-cache-{{ .Branch }}
                   - v1-node-cache-
-          post-install-steps:
+            - run: npm install
+            # - run: npm build
+          post-publish-steps:
             - save_cache:
                 key: v1-node-cache-{{ .Branch }}-{{ checksum "npm-publisher-orb-integration-test/package-lock.json" }}
                 paths:
