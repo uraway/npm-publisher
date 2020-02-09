@@ -18,7 +18,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - 6e:e6:2d:e8:e2:cc:4b:ee:1f:15:02:f7:dc:0c:2f:08
-      - npm-publisher/git-configure
+      - npm-publisher/configure-git
       - run:
           name: increment version & push commit
           working_directory: npm-publisher-orb-integration-test
