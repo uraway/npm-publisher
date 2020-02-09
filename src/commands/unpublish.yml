@@ -18,4 +18,4 @@ steps:
       name: Unpublish your extension
       working_directory: << parameters.package-path >>
       command: |
-        npm unpublish
+        npm unpublish --force

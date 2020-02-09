@@ -34,7 +34,7 @@ parameters:
     type: steps
 steps:
   - checkout
-  - publish:
+  - publish-from-package-version:
       publish-token-variable: << parameters.publish-token-variable >>
       package-path: << parameters.package-path >>
       pre-publish-steps: << parameters.pre-publish-steps >>

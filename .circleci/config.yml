@@ -13,7 +13,7 @@ version: 2.1
 workflows:
   integration-tests_prod-release:
     jobs:
-      - npm-publisher/publish-from-commit-subject:
+      - npm-publisher/publish-from-package-version:
           name: publish-npm-package
           publish-token-variable: NPM_TOKEN
           push-git-tag: false
@@ -25,6 +25,7 @@ workflows:
                   - v1-node-cache-{{ .Branch }}
                   - v1-node-cache-
             - run: npm install
+            # if required
             # - run: npm build
           post-publish-steps:
             - save_cache:
