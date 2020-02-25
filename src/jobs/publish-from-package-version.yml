@@ -32,6 +32,11 @@ parameters:
     description: |
       Steps which are executed after publication of your package.
     type: steps
+  args:
+    default: ""
+    description: |
+     Arguments passing `npm publish`
+    type: string
 steps:
   - checkout
   - publish-from-package-version:
@@ -39,6 +44,7 @@ steps:
       package-path: << parameters.package-path >>
       pre-publish-steps: << parameters.pre-publish-steps >>
       post-publish-steps: << parameters.post-publish-steps >>
+      args: << parameters.args >>
   - when:
       condition: << parameters.push-git-tag >>
       steps:

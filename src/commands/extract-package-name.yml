@@ -5,7 +5,7 @@ parameters:
   package-path:
     default: "."
     description: |
-      Root directory of your extension
+      Root directory of your package
     type: string
 steps:
   - run:

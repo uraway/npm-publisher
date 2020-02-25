@@ -9,13 +9,13 @@ parameters:
   package-path:
     default: "."
     description: |
-      Root directory of your extension
+      Root directory of your package
     type: string
 steps:
   - authenticate-with-registry:
       publish-token-variable: << parameters.publish-token-variable >>
   - run:
-      name: Unpublish your extension
+      name: Unpublish your package
       working_directory: << parameters.package-path >>
       command: |
         npm unpublish --force
