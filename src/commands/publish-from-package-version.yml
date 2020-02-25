@@ -9,7 +9,7 @@ parameters:
   package-path:
     default: "."
     description: |
-      Root directory of your extension
+      Root directory of your package
     type: string
   pre-publish-steps:
     default: []
@@ -21,6 +21,11 @@ parameters:
     description: |
       Steps which are executed after publication of your package.
     type: steps
+  args:
+    default: ""
+    description: |
+     Arguments passing `npm publish`
+    type: string
 steps:
   - steps: << parameters.pre-publish-steps >>
   - authenticate-with-registry:
@@ -29,5 +34,5 @@ steps:
       name: Publish your package
       working_directory: << parameters.package-path >>
       command: |
-        npm publish
+        npm publish << parameters.args >>
   - steps: << parameters.post-publish-steps >>

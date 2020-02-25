@@ -10,33 +10,13 @@ parameters:
     default: false
     type: boolean
 
-jobs:
-  increment-version:
-    executor: npm-publisher/node
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - 6e:e6:2d:e8:e2:cc:4b:ee:1f:15:02:f7:dc:0c:2f:08
-      - npm-publisher/configure-git
-      - run:
-          name: increment version & push commit
-          working_directory: npm-publisher-orb-integration-test
-          command: |
-            NEW_VERSION=$(npm find npm-publisher-orb-integration-test --json | jq -r .[0].version)
-            git add .
-            git commit -m "increment prerelease version [ci skip]"
-            git push
-
 version: 2.1
 workflows:
   integration-tests_prod-release:
     jobs:
-      - increment-version
       - npm-publisher/publish-from-package-version:
-          requires:
-            - increment-version
           name: publish-npm-package
+          args: --dry-run
           publish-token-variable: NPM_TOKEN
           push-git-tag: false
           package-path: npm-publisher-orb-integration-test
@@ -54,12 +34,6 @@ workflows:
                 key: v1-node-cache-{{ .Branch }}-{{ checksum "npm-publisher-orb-integration-test/package-lock.json" }}
                 paths:
                   - node_modules
-      - npm-publisher/unpublish:
-          name: unpublish-npm-package
-          publish-token-variable: NPM_TOKEN
-          package-path: npm-publisher-orb-integration-test
-          requires:
-            - publish-npm-package
       - orb-tools/dev-promote-prod-from-commit-subject:
           add-pr-comment: true
           bot-user: uraway
@@ -71,7 +45,7 @@ workflows:
               only: master
           orb-name: uraway/npm-publisher
           requires:
-            - unpublish-npm-package
+            - publish-npm-package
     when: << pipeline.parameters.run-integration-tests >>
   lint_pack-validate_publish-dev:
     jobs:
