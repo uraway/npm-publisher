@@ -23,11 +23,10 @@ jobs:
           name: increment version & push commit
           working_directory: npm-publisher-orb-integration-test
           command: |
-            git checkout master
-            npm version patch
+            NEW_VERSION=$(npm find npm-publisher-orb-integration-test --json | jq -r .[0].version)
             git add .
-            git commit -m "increment patch version [ci skip]"
-            git push -f
+            git commit -m "increment prerelease version [ci skip]"
+            git push
 
 version: 2.1
 workflows:
