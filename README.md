@@ -2,7 +2,7 @@
 
 An orb for NPM package authors.
 
-## Personal Access Token
+## Authentication Token
 
 To publish your package, you need to create Authentication Token. More detail [here](https://docs.npmjs.com/creating-and-viewing-authentication-tokens).
 
