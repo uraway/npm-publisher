@@ -26,7 +26,7 @@ parameters:
     description: |
      Arguments passing `npm publish`
     type: string
-  fail-if-npm-version-exist:
+  fail-if-npm-publish-failed:
     default: true
     description: |
       Whether to fail if the package version has already existed on npm
@@ -41,7 +41,7 @@ steps:
       command: |
         npm publish << parameters.args >>
 
-        if [ "<<parameters.fail-if-npm-version-exist>>" == "true" ];then
+        if [ $? != "0" ] && [ "<< parameters.fail-if-npm-publish-failed >>" == "true" ];then
           exit 1
         else
           exit 0
