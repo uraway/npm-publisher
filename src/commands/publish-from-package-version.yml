@@ -26,6 +26,11 @@ parameters:
     description: |
      Arguments passing `npm publish`
     type: string
+  fail-if-npm-publish-failed:
+    default: true
+    description: |
+      Whether to fail if the package version has already existed on npm
+    type: boolean
 steps:
   - steps: << parameters.pre-publish-steps >>
   - authenticate-with-registry:
@@ -35,4 +40,10 @@ steps:
       working_directory: << parameters.package-path >>
       command: |
         npm publish << parameters.args >>
+
+        if [ $? != "0" ] && [ "<< parameters.fail-if-npm-publish-failed >>" == "true" ];then
+          exit 1
+        else
+          exit 0
+        fi
   - steps: << parameters.post-publish-steps >>
